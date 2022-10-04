@@ -1,4 +1,4 @@
-# AOP-golang: A AOP library based on generic implementation, simple and lightweight.
+# AOP-golang: A AOP library based on generic implementation.
 
 🇬🇧 English | 🇨🇳 [中文](./README_ZH.md)
 
@@ -12,12 +12,8 @@ _AOP_ (Aspect Oriented Programming) is a kind of programming design idea, is the
 
 ## Usage
 
-1) 首先，定义一个结构类型，继承 Aspect 接口
+1) First, define a structure type that implement the Aspect interface.
 ```go
-package aop
-
-import "context"
-
 // BusProxy proxy bus
 type BusProxy struct {
 	bus *Bus
@@ -34,7 +30,7 @@ type Bus struct {
 }
 ```
 
-2) 实例化泛型结构AOP
+2) Instantiate the generic architecture AOP.
 ```go
 // NewBus instantiate generic AOP for BusProxy.
 func NewBus(name, route string, p int64) AOP[BusProxy] {
@@ -50,7 +46,7 @@ func NewBus(name, route string, p int64) AOP[BusProxy] {
 }
 ```
 
-3) 实例化前置/后置切入点
+3) Instantiate a pre/post pointcut.
 ```go
 // Pre-cut point Option
 beforePoint := RegisterBefore[BusProxy]
@@ -58,7 +54,7 @@ beforePoint := RegisterBefore[BusProxy]
 afterPoint := RegisterAfter[BusProxy]
 ```
 
-4) 切入点结构继承泛型接口 Before[T Aspect] / After[T Aspect]
+4) Pointcut structures implement generic interfaces Before[T Aspect] / After[T Aspect].
 ```go
 type Police struct {
 }
@@ -71,17 +67,17 @@ func (p Police) After(ctx context.Context, bp *BusProxy) {
 }
 ```
 
-5) 生成Option加载点
+5) Generate Option load points.
 ```go
 p := Police{}
 pBeforeOpt := beforePoint(p)
 pAfterOpt := afterPoint(p)
 ```
 
-6) 执行AOP代理方法
+6) Execute AOP proxy methods.
 ```go
 busAop.Proxy(ctx, pBeforeOpt, pAfterOpt)
 ```
 
-## 最后
+## Finally
 更多使用示例请查看`test文件`，欢迎提`issue`。
