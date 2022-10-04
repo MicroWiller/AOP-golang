@@ -1,10 +1,10 @@
-# AOP-golang: A AOP library based on generic implementation, simple and lightweight.
+# AOP: 基于泛型实现的AOP库，简单轻量。
 
-🇬🇧 English | 🇨🇳 [中文](./README_ZH.md)
+🇬🇧 [English](./README.md) | 🇨🇳 中文
 
 ## Overview
 
-_AOP_ (Aspect Oriented Programming) is a kind of programming design idea, is the continuation of OOP (Object Oriented Programming), is a hot spot in software development. AOP can be used to isolate each part of business logic, so as to reduce the coupling degree between the parts of business logic, improve the reusability of the program, and improve the efficiency of development.
+_AOP_（面向切面编程）是一种编程设计思想，是OOP（面向对象程序设计）的延续，是软件开发中的一个热点。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提升开发的效率。
 
 ## Installation
 
@@ -38,15 +38,15 @@ type Bus struct {
 ```go
 // NewBus instantiate generic AOP for BusProxy.
 func NewBus(name, route string, p int64) AOP[BusProxy] {
-	busProxyAop := AOP[BusProxy]{}
-	bus := Bus{
-		Name:       name,
-		Route:      route,
-		Passengers: p,
-	}
-	proxy := BusProxy{bus: &bus}
-	busProxyAop.SetProxy(proxy)
-	return busProxyAop
+busProxyAop := AOP[BusProxy]{}
+bus := Bus{
+Name:       name,
+Route:      route,
+Passengers: p,
+}
+proxy := BusProxy{bus: &bus}
+busProxyAop.SetProxy(proxy)
+return busProxyAop
 }
 ```
 
