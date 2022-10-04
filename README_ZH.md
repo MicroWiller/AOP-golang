@@ -2,15 +2,15 @@
 
 🇬🇧 [English](./README.md) | 🇨🇳 中文
 
-## Overview
+## 概述
 
 _AOP_（面向切面编程）是一种编程设计思想，是OOP（面向对象程序设计）的延续，是软件开发中的一个热点。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提升开发的效率。
 
-## Installation
+## 安装
 
 `go get github.com/MicroWiller/AOP-golang`
 
-## Usage
+## 使用
 
 1) 首先，定义一个结构类型，继承 Aspect 接口
 ```go
