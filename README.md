@@ -80,4 +80,4 @@ busAop.Proxy(ctx, pBeforeOpt, pAfterOpt)
 ```
 
 ## Finally
-更多使用示例请查看`test文件`，欢迎提`issue`。
+See more examples`test file`， 欢迎提issue `issue`。
