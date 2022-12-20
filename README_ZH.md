@@ -23,8 +23,8 @@ type BusProxy struct {
 	bus *Bus
 }
 
-func (ap BusProxy) Aspect(ctx context.Context) error {
-	return nil
+func (ap BusProxy) Pointcut(ctx context.Context) error {
+	return ap.bus.Drive(ctx)
 }
 
 type Bus struct {
@@ -38,24 +38,22 @@ type Bus struct {
 ```go
 // NewBus instantiate generic AOP for BusProxy.
 func NewBus(name, route string, p int64) AOP[BusProxy] {
-busProxyAop := AOP[BusProxy]{}
-bus := Bus{
-Name:       name,
-Route:      route,
-Passengers: p,
-}
-proxy := BusProxy{bus: &bus}
-busProxyAop.SetProxy(proxy)
-return busProxyAop
+	busProxyAop := AOP[BusProxy]{}
+	bus := Bus{
+		Name:       name,
+		Route:      route,
+		Passengers: p,
+	}
+	proxy := BusProxy{bus: &bus}
+	busProxyAop.SetProxy(proxy)
+	return busProxyAop
 }
 ```
 
 3) 实例化前置/后置切入点
 ```go
-// Pre-cut point Option
-beforePoint := RegisterBefore[BusProxy]
-// Post cut point Option
-afterPoint := RegisterAfter[BusProxy]
+before := RegisterBefore[BusProxy]
+after := RegisterAfter[BusProxy]
 ```
 
 4) 切入点结构继承泛型接口 Before[T Aspect] / After[T Aspect]
@@ -74,8 +72,8 @@ func (p Police) After(ctx context.Context, bp *BusProxy) {
 5) 生成Option加载点
 ```go
 p := Police{}
-pBeforeOpt := beforePoint(p)
-pAfterOpt := afterPoint(p)
+pBeforeOpt := before(p)
+pAfterOpt := after(p)
 ```
 
 6) 执行AOP代理方法

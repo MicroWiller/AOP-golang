@@ -11,18 +11,16 @@ func TestExample1(t *testing.T) {
 
 	userAop := NewUser("nice", "qwerty")
 
-	// Pre-cut point Option
-	userBeforePoint := RegisterBefore[User]
-	// Post cut point Option
-	userAfterPoint := RegisterAfter[User]
+	userBeforeAdvice := RegisterBefore[User]
+	userAfterAdvice := RegisterAfter[User]
 
 	vna := ValidateNameAdvice{}
-	vnaBefore := userBeforePoint(vna)
-	vnaAfter := userAfterPoint(vna)
+	vnaBefore := userBeforeAdvice(vna)
+	vnaAfter := userAfterAdvice(vna)
 
 	vpa := ValidatePasswordAdvice{MaxLength: 10, MinLength: 6}
-	vpaBefore := userBeforePoint(vpa)
-	vpaAfter := userAfterPoint(vpa)
+	vpaBefore := userBeforeAdvice(vpa)
+	vpaAfter := userAfterAdvice(vpa)
 
 	ctx := context.Background()
 
@@ -58,7 +56,7 @@ func (u User) Auth(ctx context.Context) error {
 	return nil
 }
 
-func (u User) Aspect(ctx context.Context) error {
+func (u User) Pointcut(ctx context.Context) error {
 	return u.Auth(ctx)
 }
 

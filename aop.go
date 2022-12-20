@@ -2,18 +2,8 @@ package aop
 
 import "context"
 
-// Before pre-cut point
-type Before[T Aspect] interface {
-	Before(ctx context.Context, t *T) error
-}
-
-// After post cut point
-type After[T Aspect] interface {
-	After(ctx context.Context, t *T)
-}
-
 // AOP generic type for aspect-Oriented Programming.
-type AOP[T Aspect] struct {
+type AOP[T Pointcut] struct {
 	befores []Before[T]
 	afters  []After[T]
 	proxy   T
@@ -58,7 +48,7 @@ func (aop *AOP[T]) Proxy(ctx context.Context, opts ...Option[T]) error {
 		return err
 	}
 
-	if err := proxy.Aspect(ctx); err != nil {
+	if err := proxy.Pointcut(ctx); err != nil {
 		return err
 	}
 
@@ -80,23 +70,4 @@ func (aop *AOP[T]) After(ctx context.Context, t *T) {
 	for _, after := range aop.GetAfters() {
 		after.After(ctx, t)
 	}
-}
-
-type Option[T Aspect] func(aop *AOP[T])
-
-func RegisterBefore[T Aspect](befores ...Before[T]) Option[T] {
-	return func(aop *AOP[T]) {
-		aop.befores = append(aop.befores, befores...)
-	}
-}
-
-func RegisterAfter[T Aspect](afters ...After[T]) Option[T] {
-	return func(aop *AOP[T]) {
-		aop.afters = append(aop.afters, afters...)
-	}
-}
-
-// Aspect actual business interface.
-type Aspect interface {
-	Aspect(ctx context.Context) error
 }

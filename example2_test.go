@@ -11,9 +11,7 @@ func TestAOP(t *testing.T) {
 
 	busAop := NewBus("131", "13", 13)
 
-	// Pre-cut point Option
 	beforePoint := RegisterBefore[BusProxy]
-	// Post cut point Option
 	afterPoint := RegisterAfter[BusProxy]
 
 	p := Police{}
@@ -46,7 +44,7 @@ type BusProxy struct {
 	bus *Bus
 }
 
-func (ap BusProxy) Aspect(ctx context.Context) error {
+func (ap BusProxy) Pointcut(ctx context.Context) error {
 	return ap.bus.Drive(ctx)
 }
 

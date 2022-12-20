@@ -19,8 +19,8 @@ type BusProxy struct {
 	bus *Bus
 }
 
-func (ap BusProxy) Aspect(ctx context.Context) error {
-	return nil
+func (ap BusProxy) Pointcut(ctx context.Context) error {
+	return ap.bus.Drive(ctx)
 }
 
 type Bus struct {
@@ -48,10 +48,8 @@ func NewBus(name, route string, p int64) AOP[BusProxy] {
 
 3) Instantiate a pre/post pointcut.
 ```go
-// Pre-cut point Option
-beforePoint := RegisterBefore[BusProxy]
-// Post cut point Option
-afterPoint := RegisterAfter[BusProxy]
+before := RegisterBefore[BusProxy]
+aftere := RegisterAfter[BusProxy]
 ```
 
 4) Pointcut structures implement generic interfaces Before[T Aspect] / After[T Aspect].
@@ -70,8 +68,8 @@ func (p Police) After(ctx context.Context, bp *BusProxy) {
 5) Generate Option load points.
 ```go
 p := Police{}
-pBeforeOpt := beforePoint(p)
-pAfterOpt := afterPoint(p)
+pBeforeOpt := before(p)
+pAfterOpt := aftere(p)
 ```
 
 6) Execute AOP proxy methods.
